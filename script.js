@@ -535,15 +535,25 @@ document.addEventListener('DOMContentLoaded', () => {
     let sendSuccess = false;
 
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 25000);
+
       const response = await fetch(BACKEND_API_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
+        signal: controller.signal
       });
+      clearTimeout(timeoutId);
 
-      const result = await response.json();
+      let result = null;
+      try {
+        result = await response.json();
+      } catch (jsonErr) {
+        console.warn('Response was not valid JSON:', jsonErr);
+      }
       console.log('Backend response:', result);
 
       if (response.ok && result && result.success) {
@@ -683,16 +693,26 @@ document.addEventListener('DOMContentLoaded', () => {
         reference: state.userData.referenceId || 'AURA-XXXX'
       };
 
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 25000);
+
       try {
         const response = await fetch(SEND_GUIDANCE_API_URL, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(payload)
+          body: JSON.stringify(payload),
+          signal: controller.signal
         });
+        clearTimeout(timeoutId);
 
-        const result = await response.json();
+        let result = null;
+        try {
+          result = await response.json();
+        } catch (jsonErr) {
+          console.warn('Guidance response was not valid JSON:', jsonErr);
+        }
 
         if (response.ok && result && result.success) {
           if (guidanceEmailStatus) {
@@ -702,7 +722,7 @@ document.addEventListener('DOMContentLoaded', () => {
           btnSendGuidance.innerHTML = `<span>Guidance Sent</span>`;
           btnSendGuidance.disabled = true;
         } else {
-          throw new Error(result.error || 'Failed to send guidance email.');
+          throw new Error((result && (result.message || result.error)) || 'Failed to send guidance email.');
         }
       } catch (err) {
         console.error('Failed to dispatch guidance email:', err);
