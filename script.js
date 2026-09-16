@@ -5,10 +5,26 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   // --------------------------------------------------------------------------
-  // Backend Configuration
+  // Backend API Configuration (Environment-Aware)
   // --------------------------------------------------------------------------
-  const BACKEND_API_URL = 'http://localhost:3000/api/submit-grievance';
-  const SEND_GUIDANCE_API_URL = 'http://localhost:3000/api/send-guidance';
+  const isLocalHost = Boolean(
+    window.location.hostname === 'localhost' ||
+    window.location.hostname === '127.0.0.1' ||
+    window.location.hostname === '' ||
+    window.location.protocol === 'file:'
+  );
+
+  const DEFAULT_DEV_API = 'http://localhost:3000';
+  const DEFAULT_PROD_API = 'https://aura-6o4w.onrender.com';
+
+  const API_BASE_URL = (
+    (window.AURA_CONFIG && window.AURA_CONFIG.apiBaseUrl) ||
+    window.AURA_API_BASE_URL ||
+    (isLocalHost ? DEFAULT_DEV_API : DEFAULT_PROD_API)
+  ).replace(/\/+$/, '');
+
+  const BACKEND_API_URL = `${API_BASE_URL}/api/submit-grievance`;
+  const SEND_GUIDANCE_API_URL = `${API_BASE_URL}/api/send-guidance`;
 
   // --------------------------------------------------------------------------
   // State Management
