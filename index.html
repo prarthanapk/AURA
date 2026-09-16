@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AURA — Guardian of Unheard Voices | Everyone Deserves to be Heard</title>
+  <meta name="description"
+    content="AURA is a digital guardian born from the collective voices of people whose problems were never heard. A safe space to speak, be heard, and take action.">
+
+  <!-- Fonts: Space Grotesk -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!-- Ambient Background Aura & Noise Overlay -->
+  <div class="ambient-glow glow-top-center" aria-hidden="true"></div>
+  <div class="ambient-glow glow-hero-right" aria-hidden="true"></div>
+  <div class="ambient-particles" aria-hidden="true" id="ambientParticles"></div>
+
+  <!-- Majestic Fading AURA Logo Watermark in Background -->
+  <div class="site-ambient-bg-logo" aria-hidden="true">
+    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path class="bg-logo-triangle-outer" d="M50 6L88 90H72L50 48L28 90H12L50 6Z" fill="#8F2525" />
+      <path class="bg-logo-triangle-inner" d="M50 20L66 74H57L50 52L43 74H34L50 20Z" fill="#C44747" />
+      <circle class="bg-logo-core" cx="50" cy="50" r="4" fill="#F3EDED" />
+    </svg>
+  </div>
+
+  <!-- Navigation Bar -->
+  <header class="site-header" id="siteHeader">
+    <div class="nav-container">
+      <a href="#hero" class="brand-logo" id="brandLogo" aria-label="AURA Home">
+        <svg class="brand-symbol" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M20 4L33 34H26L20 19L14 34H7L20 4Z" fill="#8F2525" />
+          <path d="M20 10L27 28H23.5L20 18L16.5 28H13L20 10Z" fill="#C44747" />
+          <circle cx="20" cy="17" r="2" fill="#F3EDED" />
+        </svg>
+        <span class="brand-name">AURA</span>
+      </a>
+
+      <nav class="nav-links" id="navLinks" aria-label="Main Navigation">
+        <a href="#hero" class="nav-link active" id="navHome">Home</a>
+        <a href="#journeySilence" class="nav-link" id="navSilence">The Silence</a>
+        <a href="#journeyLearning" class="nav-link" id="navTruth">First Truth</a>
+        <a href="#journeyEchoSense" class="nav-link" id="navEchoSense">EchoSense</a>
+        <a href="#journeyOath" class="nav-link" id="navOath">The Oath</a>
+        <a href="#story" class="nav-link" id="navStory">My Story</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button type="button" class="btn-replay-intro" id="btnReplayIntro" title="Replay AURA Launch Animation"
+          aria-label="Replay intro">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" aria-hidden="true">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+          <span>Watch Launch</span>
+        </button>
+        <button type="button" class="btn btn-primary btn-nav" id="navTalkBtn" aria-label="Talk to AURA">
+          <span>Talk to AURA</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- CINEMATIC LAUNCHING PAGE (Superpower Flying Intro) -->
+  <section class="launch-screen" id="launchScreen" aria-label="AURA Superhero Launch Animation">
+    <div class="launch-backdrop">
+      <div class="launch-nebula nebula-1" aria-hidden="true"></div>
+      <div class="launch-nebula nebula-2" aria-hidden="true"></div>
+      <div class="launch-shockwave shockwave-1" aria-hidden="true"></div>
+      <div class="launch-shockwave shockwave-2" aria-hidden="true"></div>
+      <div class="launch-shockwave shockwave-3" aria-hidden="true"></div>
+    </div>
+
+    <!-- Skip / Quick Enter Button -->
+    <button type="button" class="btn-skip-launch" id="btnSkipLaunch" aria-label="Skip launch intro">
+      <span>Skip Intro</span>
+    </button>
+
+    <!-- 3D Perspective Stage for Flying Character -->
+    <div class="launch-stage" id="launchStage">
+
+      <!-- 3D Ground / Ascending Energy Vortex below -->
+      <div class="aura-ascending-vortex" aria-hidden="true"></div>
+
+      <!-- 3D Character Rig (Free-floating 3D figure with long coat, zero photo frame) -->
+      <div class="aura-3d-character-wrap" id="aura3dCharacterWrap">
+
+        <!-- Deep Red Superpower Glow & Energy Ring behind AURA -->
+        <div class="aura-energy-aura" aria-hidden="true"></div>
+        <div class="aura-energy-pulser" aria-hidden="true"></div>
+
+        <!-- 3D Long Coat Energy Wings / Air Trails -->
+        <div class="aura-coat-flutter flutter-left" aria-hidden="true"></div>
+        <div class="aura-coat-flutter flutter-right" aria-hidden="true"></div>
+
+        <!-- Dynamic Lighting / Tilt Shadow for head lifting up -->
+        <div class="aura-face-tilt-lighting" aria-hidden="true"></div>
+
+        <!-- Pure Transparent 3D Character Cutout (NO CARD / NO BOX) -->
+        <img src="assets/aura_3d_figure.png"
+          alt="3D Superhero AURA with majestic long coat flying upward and facing you" class="aura-3d-figure-img"
+          id="aura3dFigureImg" draggable="false">
+
+        <!-- Glowing EchoSense Heart / Chest Core -->
+        <div class="aura-chest-core" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <!-- Cinematic Overlay Typography & Superpower Actions -->
+    <div class="launch-narrative" id="launchNarrative">
+      <div class="launch-eyebrow">ECHO SENSE &bull; AWAKENED</div>
+      <h2 class="launch-title">AURA</h2>
+      <p class="launch-subtitle">Guardian of Unheard Voices</p>
+      <p class="launch-tagline">"Everyone deserves to be heard."</p>
+
+      <div class="launch-actions">
+        <button type="button" class="btn btn-primary btn-launch-cta" id="btnLaunchTalk">
+          <span>Talk to AURA</span>
+        </button>
+        <button type="button" class="btn btn-outline btn-launch-enter" id="btnLaunchEnter">
+          <span>Enter Sanctuary</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Wrapper -->
+  <main id="mainContent">
+
+    <!-- HERO SECTION (Mockup 01) -->
+    <section class="hero-section" id="hero">
+      <div class="hero-container">
+
+        <!-- Left Column: Content -->
+        <div class="hero-content">
+          <div class="hero-eyebrow">
+            <span class="eyebrow-line" aria-hidden="true"></span>
+            <span class="eyebrow-text">AURA &bull; GUARDIAN OF UNHEARD VOICES</span>
+          </div>
+
+          <h1 class="hero-title">
+            EVERYONE<br>
+            DESERVES<br>
+            <span class="hero-title-accent">TO BE HEARD.</span>
+          </h1>
+
+          <p class="hero-lead">
+            I'm AURA, Guardian of Unheard Voices.
+          </p>
+
+          <p class="hero-description">
+            A safe space. A listening hero. <br class="hide-mobile">
+            Real people. Real problems. Real action.
+          </p>
+
+          <div class="hero-cta-group">
+            <button type="button" class="btn btn-primary btn-hero" id="heroTalkBtn">
+              <span>Talk to AURA</span>
+            </button>
+
+            <a href="#journeySilence" class="btn btn-outline btn-hero" id="heroStoryBtn">
+              <span>Begin The Journey</span>
+            </a>
+          </div>
+
+          <!-- Vertical Micro-Quotes / Echoes -->
+          <div class="vertical-words-group" aria-hidden="true">
+            <span class="vert-word">LISTEN</span>
+            <span class="vert-sep">&bull;</span>
+            <span class="vert-word">UNDERSTAND</span>
+            <span class="vert-sep">&bull;</span>
+            <span class="vert-word">SUPPORT</span>
+            <span class="vert-sep">&bull;</span>
+            <span class="vert-word">ACT</span>
+          </div>
+
+          <!-- Hero Metrics & Impact Stats -->
+          <div class="hero-stats-row" role="region" aria-label="Impact statistics">
+            <div class="stat-card">
+              <div class="stat-icon-wrap" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+              </div>
+              <div class="stat-info">
+                <span class="stat-number">2,481+</span>
+                <span class="stat-label">People Reached</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrap" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path
+                    d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                  </path>
+                </svg>
+              </div>
+              <div class="stat-info">
+                <span class="stat-number">384+</span>
+                <span class="stat-label">Lives Touched</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrap" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                  <path d="M9 12l2 2 4-4"></path>
+                </svg>
+              </div>
+              <div class="stat-info">
+                <span class="stat-number">97%</span>
+                <span class="stat-label">Support Success</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Visual Artwork of AURA (Hero Portrait + CSS Fallback Guardian) -->
+        <div class="hero-visual-wrapper">
+          <div class="hero-art-frame" id="heroArtFrame">
+
+            <!-- Atmospheric Halo -->
+            <div class="art-halo-ring" aria-hidden="true"></div>
+            <div class="art-radial-glow" aria-hidden="true"></div>
+
+            <!-- Standalone CSS/SVG Guardian Visual (Meets prompt requirement: "Create an attractive AURA superhero visual using CSS if no image is available") -->
+            <div class="css-guardian-visual" id="cssGuardianVisual" aria-hidden="true">
+              <div class="guardian-pulse-circle"></div>
+              <div class="guardian-wave wave-1"></div>
+              <div class="guardian-wave wave-2"></div>
+              <div class="guardian-wave wave-3"></div>
+              <svg class="guardian-svg-silhouette" viewBox="0 0 200 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="guardianGrad" x1="100" y1="20" x2="100" y2="280" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="#C44747" stop-opacity="0.9" />
+                    <stop offset="40%" stop-color="#8F2525" stop-opacity="0.7" />
+                    <stop offset="100%" stop-color="#0B0A0A" stop-opacity="0.1" />
+                  </linearGradient>
+                  <radialGradient id="auraCore" cx="100" cy="90" r="70" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="#C44747" stop-opacity="0.6" />
+                    <stop offset="100%" stop-color="#0B0A0A" stop-opacity="0" />
+                  </radialGradient>
+                </defs>
+                <circle cx="100" cy="90" r="60" fill="url(#auraCore)" />
+                <path
+                  d="M100 45 C115 45, 125 58, 125 78 C125 98, 115 110, 100 110 C85 110, 75 98, 75 78 C75 58, 85 45, 100 45 Z"
+                  fill="url(#guardianGrad)" opacity="0.85" />
+                <path
+                  d="M100 115 C130 115, 155 135, 160 175 L165 260 C165 270, 150 280, 100 280 C50 280, 35 270, 35 260 L40 175 C45 135, 70 115, 100 115 Z"
+                  fill="url(#guardianGrad)" opacity="0.75" />
+                <circle cx="100" cy="78" r="3" fill="#F3EDED" opacity="0.9" />
+              </svg>
+            </div>
+
+            <!-- Primary High-Res Cinematic Portrait Image of AURA -->
+            <img src="assets/aura_hero.jpg"
+              alt="AURA — Guardian of Unheard Voices, a calm, empathetic and intelligent digital superhero"
+              class="hero-portrait-img" id="heroPortraitImg" loading="eager">
+
+            <!-- Subtle Floating Tag -->
+            <div class="floating-accent-tag" aria-hidden="true">
+              <span class="tag-dot"></span>
+              <span class="tag-label">EchoSense &bull; Active Listening</span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================
+         CINEMATIC STORYTELLING JOURNEY: "AURA EARNS YOUR TRUST"
+         ======================================================== -->
+    <div class="aura-journey-wrapper" id="auraJourneyWrapper">
+
+      <!-- AURA Awakening Symbol HUD Tracker -->
+      <div class="journey-symbol-hud" id="journeySymbolHud" aria-hidden="true">
+        <div class="hud-symbol-track">
+          <div class="hud-glyph-wrap" id="hudGlyphWrap">
+            <svg class="hud-glyph-svg" viewBox="0 0 50 50" fill="none">
+              <path class="glyph-path-back" d="M25 6L41 42H32L25 24L18 42H9L25 6Z" stroke="#8F2525"
+                stroke-width="1.8" />
+              <path class="glyph-path-front" d="M25 12L34 35H29.5L25 22.5L20.5 35H16L25 12Z" fill="#C44747" />
+              <circle class="glyph-core" cx="25" cy="22" r="2.5" fill="#F3EDED" />
+            </svg>
+            <div class="hud-ripple-ring ring-1"></div>
+            <div class="hud-ripple-ring ring-2"></div>
+          </div>
+          <div class="hud-stages-indicator">
+            <span class="hud-step active" data-target="journeySilence" title="01 Silence">A</span>
+            <span class="hud-line"></span>
+            <span class="hud-step" data-target="journeyEchoSense" title="03 EchoSense">ECHO</span>
+            <span class="hud-line"></span>
+            <span class="hud-step" data-target="journeyMission" title="05 Mission">AURA</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 1 — THE SILENCE -->
+      <section class="journey-section journey-silence" id="journeySilence">
+        <div class="silence-atmosphere-glow" aria-hidden="true"></div>
+        <div class="journey-container silence-container">
+
+          <div class="journey-eyebrow">
+            <span class="eyebrow-num">01</span>
+            <span class="eyebrow-sep">//</span>
+            <span class="eyebrow-label">ORIGIN FREQUENCY</span>
+          </div>
+
+          <!-- Subtle Background Watermark AURA Glyph -->
+          <div class="silence-watermark-symbol" aria-hidden="true">
+            <svg viewBox="0 0 100 100" fill="none">
+              <path d="M50 8L86 88H68L50 46L32 88H14L50 8Z" stroke="rgba(143, 37, 37, 0.12)" stroke-width="1.5" />
+              <circle cx="50" cy="46" r="5" fill="rgba(196, 71, 71, 0.15)" />
+            </svg>
+          </div>
+
+          <!-- Progressive Reveal Narrative Lines -->
+          <div class="silence-narrative-flow">
+            <p class="silence-line" data-reveal="1">
+              "Before I existed, there were voices."
+            </p>
+            <p class="silence-line" data-reveal="2">
+              "People who didn't know who to ask."
+            </p>
+            <p class="silence-line" data-reveal="3">
+              "People who were afraid they wouldn't be understood."
+            </p>
+            <p class="silence-line" data-reveal="4">
+              "People who simply stopped asking."
+            </p>
+            <div class="silence-line silence-climax-wrap" data-reveal="5">
+              <span class="climax-pulse-dot" aria-hidden="true"></span>
+              <h2 class="silence-climax-text">
+                "I was born from those echoes."
+              </h2>
+            </div>
+          </div>
+
+          <!-- Gentle Scroll Cue (clean line indicator) -->
+          <div class="journey-scroll-cue" aria-hidden="true">
+            <span class="cue-pill-indicator"></span>
+            <span class="cue-text">Scroll to meet AURA</span>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SECTION 2 — THE FIRST THING I LEARNED -->
+      <section class="journey-section journey-learning" id="journeyLearning">
+        <div class="journey-container">
+
+          <div class="journey-eyebrow">
+            <span class="eyebrow-num">02</span>
+            <span class="eyebrow-sep">//</span>
+            <span class="eyebrow-label">FIRST TRUTH</span>
+          </div>
+
+          <div class="learning-header text-center">
+            <h2 class="journey-title learning-title">
+              "The first thing I learned wasn't how to fight."<br>
+              <span class="journey-accent">"It was how to listen."</span>
+            </h2>
+            <p class="learning-sub">
+              "People don't always say what they really need."
+            </p>
+          </div>
+
+          <!-- Interactive Transformation Card -->
+          <div class="transformation-card-wrap">
+            <div class="transform-card" id="cardTruthTransform" role="button" tabindex="0"
+              aria-label="Tap to reveal what words hide underneath">
+              <div class="card-edge-glow" aria-hidden="true"></div>
+
+              <div class="transform-hint-badge">
+                <span class="hint-pulse"></span>
+                <span class="hint-text">TAP / CLICK TO LISTEN BENEATH THE SURFACE</span>
+              </div>
+
+              <div class="transform-state state-surface">
+                <span class="state-tag">What words sound like on the outside</span>
+                <h3 class="surface-quote">"I need help."</h3>
+                <div class="tap-invite">
+                  <span class="tap-dot-indicator" aria-hidden="true"></span>
+                  <span>Touch to reveal the unspoken echo</span>
+                </div>
+              </div>
+
+              <div class="transform-state state-depth">
+                <span class="state-bridge">can sometimes mean:</span>
+                <h3 class="depth-quote">"I don't know who to trust."</h3>
+                <span class="depth-sub">AURA hears the courage behind your hesitation.</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SECTION 3 — EXPERIENCE ECHOSENSE -->
+      <section class="journey-section journey-echosense" id="journeyEchoSense">
+        <div class="journey-container">
+
+          <div class="journey-eyebrow">
+            <span class="eyebrow-num">03</span>
+            <span class="eyebrow-sep">//</span>
+            <span class="eyebrow-label">ECHOSENSE</span>
+          </div>
+
+          <div class="echosense-heading-block text-center">
+            <h2 class="journey-title">
+              "I don't hear just words."<br>
+              <span class="journey-accent">"I hear the echo behind them."</span>
+            </h2>
+            <p class="echosense-lead">
+              EchoSense is my ability to perceive unspoken weight. Hover or tap each frequency:
+            </p>
+          </div>
+
+          <!-- 3 Interactive Cards -->
+          <div class="echosense-cards-grid">
+
+            <!-- CARD 1 -->
+            <div class="echo-card card-fine" tabindex="0" role="region" aria-label="Frequency 1: I'm fine">
+              <div class="echo-card-inner">
+                <div class="card-frequency-pill">FREQUENCY 01</div>
+                <div class="card-front">
+                  <span class="quote-mark" aria-hidden="true">“</span>
+                  <h3 class="echo-front-title">"I'm fine."</h3>
+                  <span class="echo-tap-guide">Tap / hover to reveal</span>
+                </div>
+                <div class="card-revealed">
+                  <span class="reveal-context">Sometimes "fine" means:</span>
+                  <p class="reveal-truth">"I don't know how to explain it."</p>
+                  <div class="card-wave-indicator wave-1" aria-hidden="true">
+                    <span></span><span></span><span></span><span></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CARD 2 -->
+            <div class="echo-card card-nothing" tabindex="0" role="region" aria-label="Frequency 2: It's nothing">
+              <div class="echo-card-inner">
+                <div class="card-frequency-pill">FREQUENCY 02</div>
+                <div class="card-front">
+                  <span class="quote-mark" aria-hidden="true">“</span>
+                  <h3 class="echo-front-title">"It's nothing."</h3>
+                  <span class="echo-tap-guide">Tap / hover to reveal</span>
+                </div>
+                <div class="card-revealed">
+                  <span class="reveal-context">Sometimes "nothing" means:</span>
+                  <p class="reveal-truth">"I don't want to be a burden."</p>
+                  <div class="card-wave-indicator wave-2" aria-hidden="true">
+                    <span></span><span></span><span></span><span></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CARD 3 -->
+            <div class="echo-card card-help" tabindex="0" role="region" aria-label="Frequency 3: Can you help?">
+              <div class="echo-card-inner">
+                <div class="card-frequency-pill">FREQUENCY 03</div>
+                <div class="card-front">
+                  <span class="quote-mark" aria-hidden="true">“</span>
+                  <h3 class="echo-front-title">"Can you help?"</h3>
+                  <span class="echo-tap-guide">Tap / hover to reveal</span>
+                </div>
+                <div class="card-revealed">
+                  <span class="reveal-context">AURA's response:</span>
+                  <p class="reveal-truth highlight-truth">"That's where I begin."</p>
+                  <div class="card-wave-indicator wave-3" aria-hidden="true">
+                    <span></span><span></span><span></span><span></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Interactive Live EchoSense Tester -->
+          <div class="echosense-live-tester" id="echosenseLiveBox">
+            <div class="tester-inner-box">
+              <div class="tester-header">
+                <span class="tag-dot" aria-hidden="true"></span>
+                <span class="tester-title">EXPERIENCE ECHOSENSE</span>
+                <span class="tester-subtitle">Say something. AURA will listen.</span>
+              </div>
+
+              <!-- Quick Thought Chips -->
+              <div class="tester-chips">
+                <button type="button" class="chip-btn" data-text="I feel overwhelmed and don't know who to talk to">"I
+                  feel overwhelmed..."</button>
+                <button type="button" class="chip-btn"
+                  data-text="Everything is moving too fast lately and I feel left behind">"Moving too fast..."</button>
+                <button type="button" class="chip-btn" data-text="I'm afraid of being judged if I share this">"Afraid of
+                  judgment..."</button>
+              </div>
+
+              <!-- Input Form -->
+              <form class="echosense-input-form" id="echosenseForm" autocomplete="off">
+                <div class="echosense-input-wrapper">
+                  <label for="echosenseInput" class="visually-hidden">Say something to AURA</label>
+                  <input type="text" id="echosenseInput" class="echosense-text-input"
+                    placeholder="Say something... share what is weighing on you..." required>
+                  <button type="submit" class="btn btn-primary btn-echosense-submit" id="btnEchosenseSubmit">
+                    <span>Let AURA Listen</span>
+                  </button>
+                </div>
+              </form>
+
+              <!-- EchoSense Result Box -->
+              <div class="echosense-result-box" id="echosenseResult" style="display: none;">
+                <div class="result-aura-badge">
+                  <div class="result-avatar-ring">
+                    <svg viewBox="0 0 40 40" fill="none" class="result-crest-mini" aria-hidden="true">
+                      <path d="M20 4L33 34H26L20 19L14 34H7L20 4Z" fill="#8F2525" />
+                      <path d="M20 10L27 28H23.5L20 18L16.5 28H13L20 10Z" fill="#C44747" />
+                      <circle cx="20" cy="17" r="2" fill="#F3EDED" />
+                    </svg>
+                    <span class="result-pulse-ring"></span>
+                  </div>
+                  <div class="result-badge-text">
+                    <span class="result-aura-name">AURA &bull; EchoSense Active</span>
+                    <span class="result-sense-tag" id="resultSenseTag">Sensing unspoken weight...</span>
+                  </div>
+                </div>
+                <div class="result-message-bubble">
+                  <p class="result-aura-text" id="resultAuraText"></p>
+                </div>
+              </div>
+
+              <!-- Ethical Disclaimer -->
+              <div class="echosense-disclaimer">
+                <p>
+                  <strong>Disclaimer:</strong> This is fictional superhero storytelling. AURA does not diagnose
+                  emotions, read minds, or perform psychological analysis. Real human compassion begins with genuine
+                  listening.
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SECTION 4 — AURA'S OATH -->
+      <section class="journey-section journey-oath" id="journeyOath">
+        <div class="journey-container">
+
+          <div class="journey-eyebrow">
+            <span class="eyebrow-num">04</span>
+            <span class="eyebrow-sep">//</span>
+            <span class="eyebrow-label">THE OATH</span>
+          </div>
+
+          <div class="oath-heading-block text-center">
+            <h2 class="journey-title">
+              "Before you tell me your story,"<br>
+              <span class="journey-accent">"I want you to know mine."</span>
+            </h2>
+            <p class="oath-lead">Three sacred principles I will never break:</p>
+          </div>
+
+          <!-- Three Interactive Oath Cards -->
+          <div class="oath-cards-grid">
+
+            <!-- OATH CARD 1 -->
+            <div class="oath-card oath-card-1" tabindex="0" role="region" aria-label="Oath 1">
+              <div class="oath-shield-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  <path d="M9 12l2 2 4-4" />
+                </svg>
+              </div>
+              <div class="oath-primary-clause">
+                <span class="clause-num">OATH I</span>
+                <h3 class="clause-text">"I WILL NOT JUDGE YOU."</h3>
+              </div>
+              <div class="oath-reveal-clause">
+                <p class="clause-promise">"You don't have to make your story sound perfect."</p>
+                <span class="clause-indicator">Unconditional sanctuary</span>
+              </div>
+            </div>
+
+            <!-- OATH CARD 2 -->
+            <div class="oath-card oath-card-2" tabindex="0" role="region" aria-label="Oath 2">
+              <div class="oath-shield-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M4.93 4.93a10 10 0 0 1 14.14 0"></path>
+                  <path d="M7.76 7.76a6 6 0 0 1 8.48 0"></path>
+                  <circle cx="12" cy="12" r="2"></circle>
+                </svg>
+              </div>
+              <div class="oath-primary-clause">
+                <span class="clause-num">OATH II</span>
+                <h3 class="clause-text">"I WILL LISTEN."</h3>
+              </div>
+              <div class="oath-reveal-clause">
+                <p class="clause-promise">"You don't need to know the right words."</p>
+                <span class="clause-indicator">Patience without end</span>
+              </div>
+            </div>
+
+            <!-- OATH CARD 3 -->
+            <div class="oath-card oath-card-3" tabindex="0" role="region" aria-label="Oath 3">
+              <div class="oath-shield-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+              </div>
+              <div class="oath-primary-clause">
+                <span class="clause-num">OATH III</span>
+                <h3 class="clause-text">"I WILL HELP YOU FIND A NEXT STEP."</h3>
+              </div>
+              <div class="oath-reveal-clause">
+                <p class="clause-promise">"You don't have to figure everything out alone."</p>
+                <span class="clause-indicator">From silence to action</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Oath Climax Anchor -->
+          <div class="oath-conclusion text-center">
+            <div class="oath-seal" aria-hidden="true">
+              <svg viewBox="0 0 40 40" fill="none">
+                <path d="M20 4L33 34H26L20 19L14 34H7L20 4Z" fill="#8F2525" />
+                <path d="M20 10L27 28H23.5L20 18L16.5 28H13L20 10Z" fill="#C44747" />
+                <circle cx="20" cy="17" r="2" fill="#F3EDED" />
+              </svg>
+            </div>
+            <p class="oath-promise-tag">"That's my promise."</p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SECTION 5 — THE MISSION -->
+      <section class="journey-section journey-mission" id="journeyMission">
+        <div class="journey-container">
+
+          <div class="journey-eyebrow">
+            <span class="eyebrow-num">05</span>
+            <span class="eyebrow-sep">//</span>
+            <span class="eyebrow-label">MY MISSION</span>
+          </div>
+
+          <div class="mission-statement-flow">
+            <p class="mission-line line-contrast" data-mission-step="1">
+              "I wasn't created to fight villains."
+            </p>
+
+            <div class="mission-line line-core" data-mission-step="2">
+              <span class="core-spark" aria-hidden="true"></span>
+              <h2 class="mission-core-text">
+                "I was created to make sure people don't face their problems alone."
+              </h2>
+            </div>
+
+            <p class="mission-line line-vow" data-mission-step="3">
+              "No voice should disappear simply because nobody knew where to turn."
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SECTION 6 — THE VISITOR'S TURN -->
+      <section class="journey-section journey-visitor-turn" id="journeyVisitorTurn">
+        <div class="journey-container text-center">
+
+          <div class="journey-eyebrow center-eyebrow">
+            <span class="eyebrow-num">06</span>
+            <span class="eyebrow-sep">//</span>
+            <span class="eyebrow-label">YOUR TURN</span>
+          </div>
+
+          <!-- Ethereal AURA Emblem (Photo removed) -->
+          <div class="visitor-turn-crest-wrap" aria-hidden="true">
+            <div class="turn-crest-aura-glow"></div>
+            <svg class="turn-crest-svg" viewBox="0 0 60 60" fill="none">
+              <path d="M30 6L51 50H39L30 28L21 50H9L30 6Z" fill="#8F2525" />
+              <path d="M30 14L42 43H36L30 28L24 43H18L30 14Z" fill="#C44747" />
+              <circle cx="30" cy="27" r="3.5" fill="#F3EDED" />
+            </svg>
+            <div class="turn-crest-wave pulse-ring-1"></div>
+            <div class="turn-crest-wave pulse-ring-2"></div>
+          </div>
+
+          <div class="visitor-turn-content">
+            <p class="turn-intro-quote">
+              "I've told you why I listen."
+            </p>
+
+            <h2 class="visitor-turn-heading">
+              "Now you decide whether you're ready to speak."
+            </h2>
+
+            <p class="turn-gentle-sub">
+              "You can start with one sentence."
+            </p>
+
+            <div class="turn-cta-group">
+              <button type="button" class="btn btn-primary btn-turn-talk" id="btnJourneyChat">
+                <span>Talk to AURA</span>
+              </button>
+            </div>
+
+            <p class="turn-safety-note">
+              Confidential &bull; Zero Judgment &bull; Step-by-Step Guidance
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+
+    <!-- MY STORY SECTION (Mockup 06) -->
+    <section class="story-section" id="story">
+      <div class="story-container">
+
+        <!-- Left Column: Narrative -->
+        <div class="story-narrative">
+          <div class="section-tag">
+            <span class="tag-line" aria-hidden="true"></span>
+            <span class="tag-text">MY STORY</span>
+          </div>
+
+          <h2 class="story-title">WHO IS AURA?</h2>
+
+          <div class="story-bio">
+            <p>
+              I was born from the collective voices of people whose problems were never heard. Every unheard concern,
+              every silent struggle, every unspoken fear came together to create me.
+            </p>
+            <p>
+              Those voices merged into a digital guardian whose purpose is to listen, understand and guide. I exist to
+              make sure no person's problem is ignored simply because they don't know who to turn to.
+            </p>
+            <p class="story-highlight">
+              I exist to make sure no one feels alone again.
+            </p>
+          </div>
+
+          <div class="story-cta-box">
+            <button type="button" class="btn btn-primary" id="storyTalkBtn">
+              <span>Talk to AURA</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Right Column: Pillar Cards (Origin, Powers, Mission, Personality, Purpose) -->
+        <div class="story-pillars-grid">
+
+          <!-- Pillar 1: Origin -->
+          <div class="pillar-card">
+            <div class="pillar-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                <path d="M2 17l10 5 10-5"></path>
+                <path d="M2 12l10 5 10-5"></path>
+              </svg>
+            </div>
+            <div class="pillar-content">
+              <h3 class="pillar-title">Origin</h3>
+              <p class="pillar-desc">Born from unheard voices. Formed from collective unspoken hopes into a watchful
+                guardian.</p>
+            </div>
+          </div>
+
+          <!-- Pillar 2: Powers -->
+          <div class="pillar-card">
+            <div class="pillar-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M4.93 4.93a10 10 0 0 1 14.14 0"></path>
+                <path d="M7.76 7.76a6 6 0 0 1 8.48 0"></path>
+                <circle cx="12" cy="12" r="2"></circle>
+                <path d="M16.24 16.24a6 6 0 0 1-8.48 0"></path>
+                <path d="M19.07 19.07a10 10 0 0 1-14.14 0"></path>
+              </svg>
+            </div>
+            <div class="pillar-content">
+              <h3 class="pillar-title">Powers</h3>
+              <p class="pillar-desc"><strong class="highlight-term">EchoSense</strong> — AURA can sense the meaning
+                behind people's words and understand what kind of help they may need.</p>
+            </div>
+          </div>
+
+          <!-- Pillar 3: Mission -->
+          <div class="pillar-card">
+            <div class="pillar-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <circle cx="12" cy="12" r="6"></circle>
+                <circle cx="12" cy="12" r="2"></circle>
+              </svg>
+            </div>
+            <div class="pillar-content">
+              <h3 class="pillar-title">Mission</h3>
+              <p class="pillar-desc">To ensure every voice is heard and no person's problem is ignored simply because
+                they don't know who to turn to.</p>
+            </div>
+          </div>
+
+          <!-- Pillar 4: Personality -->
+          <div class="pillar-card">
+            <div class="pillar-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path
+                  d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z">
+                </path>
+              </svg>
+            </div>
+            <div class="pillar-content">
+              <h3 class="pillar-title">Personality</h3>
+              <p class="pillar-desc">Calm &bull; Empathetic &bull; Intelligent &bull; Protective &bull; Encouraging</p>
+            </div>
+          </div>
+
+          <!-- Pillar 5: Purpose -->
+          <div class="pillar-card">
+            <div class="pillar-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+              </svg>
+            </div>
+            <div class="pillar-content">
+              <h3 class="pillar-title">Purpose</h3>
+              <p class="pillar-desc">Listen. Understand. Guide. Create positive change.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS SECTION -->
+    <section class="how-section" id="how-it-works">
+      <div class="how-container">
+
+        <div class="section-header text-center">
+          <div class="section-tag center-tag">
+            <span class="tag-line" aria-hidden="true"></span>
+            <span class="tag-text">PROCESS</span>
+            <span class="tag-line" aria-hidden="true"></span>
+          </div>
+          <h2 class="section-heading">How It Works</h2>
+          <p class="section-subheading">A simple, confidential pathway from silence to resolution.</p>
+        </div>
+
+        <div class="steps-grid">
+
+          <!-- Step 01 -->
+          <div class="step-card">
+            <div class="step-badge">01</div>
+            <div class="step-icon-wrap" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+            </div>
+            <h3 class="step-title">Speak</h3>
+            <p class="step-desc">Tell AURA what's happening. Share your grievance, burden, or question without judgment
+              in your own words.</p>
+          </div>
+
+          <!-- Step 02 -->
+          <div class="step-card">
+            <div class="step-badge">02</div>
+            <div class="step-icon-wrap" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M2 12h5l3 9 4-18 3 9h5"></path>
+              </svg>
+            </div>
+            <h3 class="step-title">Be Heard</h3>
+            <p class="step-desc">AURA listens and understands through EchoSense, sensing the core problem and
+              recognizing the exact support required.</p>
+          </div>
+
+          <!-- Step 03 -->
+          <div class="step-card">
+            <div class="step-badge">03</div>
+            <div class="step-icon-wrap" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                stroke-linejoin="round">
+                <polygon
+                  points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                </polygon>
+              </svg>
+            </div>
+            <h3 class="step-title">Take the Next Step</h3>
+            <p class="step-desc">Your request is logged with a protected tracking reference and submitted for
+              prioritized attention and guidance.</p>
+          </div>
+
+        </div>
+
+        <div class="how-cta text-center">
+          <button type="button" class="btn btn-primary" id="howTalkBtn">
+            <span>Talk to AURA Now</span>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================
+       CHATBOT OVERLAY / FULL EXPERIENCE (Mockups 02, 03, 04, 05)
+       Appears automatically when the website opens
+       ======================================================== -->
+  <div class="chat-modal-backdrop" id="chatModalBackdrop" aria-hidden="true"></div>
+
+  <section class="chat-overlay" id="chatOverlay" role="dialog" aria-modal="true" aria-labelledby="chatHeaderTitle">
+    <!-- Chat Overlay Header Bar -->
+    <div class="chat-topbar">
+      <div class="chat-topbar-brand">
+        <svg class="brand-symbol" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M20 4L33 34H26L20 19L14 34H7L20 4Z" fill="#8F2525" />
+          <path d="M20 10L27 28H23.5L20 18L16.5 28H13L20 10Z" fill="#C44747" />
+          <circle cx="20" cy="17" r="2" fill="#F3EDED" />
+        </svg>
+        <span class="chat-topbar-title" id="chatHeaderTitle">AURA &bull; Active Listening</span>
+      </div>
+
+      <div class="chat-topbar-controls">
+        <button type="button" class="btn-chat-toggle" id="btnExploreSite" title="Explore full website">
+          <span>Explore Website</span>
+        </button>
+        <button type="button" class="btn-chat-close" id="btnCloseChat" aria-label="Close chat window">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Chat Container Frame -->
+    <div class="chat-body-layout">
+
+      <!-- Left Cinematic Aesthetic Margin (Decorative vertical text seen in mockups) -->
+      <aside class="chat-sidebar-deco deco-left" aria-hidden="true">
+        <div class="deco-vertical-text" id="leftDecoText">
+          SAME VOICES STRONGER TOMORROW
+        </div>
+      </aside>
+
+      <!-- Center Conversational Core -->
+      <div class="chat-main-stream">
+
+        <!-- Conversation Flow View (Panels 02, 03, 04) -->
+        <div class="chat-messages-container" id="chatMessagesContainer" role="log" aria-live="polite">
+          <!-- Messages will be dynamically rendered here by script.js -->
+        </div>
+
+        <!-- Dynamic Typing Indicator -->
+        <div class="typing-indicator-row" id="typingIndicator" style="display: none;" aria-label="AURA is typing">
+          <div class="chat-aura-avatar-small">
+            <img src="assets/aura_avatar.jpg" alt="AURA" class="avatar-img-tiny">
+          </div>
+          <div class="typing-bubble">
+            <span class="typing-dot dot-1"></span>
+            <span class="typing-dot dot-2"></span>
+            <span class="typing-dot dot-3"></span>
+          </div>
+        </div>
+
+        <!-- Chat Input Area: Step 1-4 (Single line prompt input) -->
+        <div class="chat-input-wrapper" id="chatInputWrapper">
+          <form id="chatForm" class="chat-form" autocomplete="off">
+            <label for="chatInput" class="visually-hidden">Your response</label>
+            <input type="text" id="chatInput" class="chat-text-input" placeholder="Type your answer..."
+              autocomplete="off">
+            <button type="submit" class="btn-send-round" id="btnSend" aria-label="Send answer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+            </button>
+          </form>
+        </div>
+
+        <!-- Chat Grievance Input Area: Step 5 (Mockup 04 - Large Textarea) -->
+        <div class="chat-grievance-wrapper" id="chatGrievanceWrapper" style="display: none;">
+          <form id="grievanceForm" class="grievance-card-form">
+            <div class="textarea-header">
+              <span class="textarea-title">Tell AURA what's happening...</span>
+              <span class="textarea-charcount" id="charCount">0/1500</span>
+            </div>
+
+            <label for="grievanceTextarea" class="visually-hidden">Describe what is happening</label>
+            <textarea id="grievanceTextarea" class="grievance-textarea" rows="5"
+              placeholder="You can share your problem, request, or anything on your mind..." required></textarea>
+
+            <div class="grievance-actions-bar">
+              <div class="grievance-media-icons" aria-hidden="true">
+                <button type="button" class="btn-icon-addon" title="Attach file or screenshot" aria-label="Attach file">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                    <polyline points="21 15 16 10 5 21"></polyline>
+                  </svg>
+                </button>
+                <button type="button" class="btn-icon-addon" title="Record voice note" aria-label="Voice note">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                    <line x1="12" y1="19" x2="12" y2="23"></line>
+                    <line x1="8" y1="23" x2="16" y2="23"></line>
+                  </svg>
+                </button>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-submit-grievance" id="btnSubmitGrievance">
+                <span>Send to AURA</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Request Received Screen (Mockup 05) -->
+        <div class="confirmation-screen" id="confirmationScreen" style="display: none;">
+
+          <div class="confirmation-crest" aria-hidden="true">
+            <svg class="crest-svg" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M30 4C30 4 36 18 48 24C36 30 30 44 30 44C30 44 24 30 12 24C24 18 30 4 30 4Z" fill="#8F2525" />
+              <path d="M30 14C30 14 34 23 42 27C34 31 30 40 30 40C30 40 26 31 18 27C26 23 30 14 30 14Z"
+                fill="#C44747" />
+              <circle cx="30" cy="27" r="3" fill="#F3EDED" />
+            </svg>
+          </div>
+
+          <h2 class="confirmation-title">AURA HAS HEARD YOU.</h2>
+
+          <p class="confirmation-lead">
+            Your message has reached me.<br>
+            I'll make sure it's not ignored.
+          </p>
+
+          <div class="confirmation-cards-row">
+
+            <div class="receipt-card">
+              <div class="receipt-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                  <path d="M7 15h0M2 9.5h20"></path>
+                </svg>
+              </div>
+              <div class="receipt-details">
+                <span class="receipt-label">Reference</span>
+                <strong class="receipt-value" id="receiptRef">AURA-4821</strong>
+              </div>
+            </div>
+
+            <div class="receipt-card">
+              <div class="receipt-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+              </div>
+              <div class="receipt-details">
+                <span class="receipt-label">Submitted</span>
+                <strong class="receipt-value" id="receiptTime">14 September 2026, 10:28 AM</strong>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- AURA's Personalized Guidance Card (Requirement: Send this guidance to my email) -->
+          <div class="confirmation-guidance-card" id="confirmationGuidanceCard">
+            <div class="guidance-card-header">
+              <span class="guidance-tag">AURA'S GUIDANCE FOR YOU</span>
+              <span class="guidance-icon" aria-hidden="true">🛡️</span>
+            </div>
+            <div class="guidance-text" id="confirmationGuidanceText">
+              <!-- Dynamically populated with AURA's empathetic guidance -->
+            </div>
+            <div class="guidance-action-row">
+              <button type="button" class="btn btn-outline btn-send-guidance" id="btnSendGuidance">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <span>Send this guidance to my email</span>
+              </button>
+              <div class="guidance-email-status" id="guidanceEmailStatus" role="status" aria-live="polite"></div>
+            </div>
+          </div>
+
+          <!-- Automatic Email Notification Alert Card -->
+          <div class="notification-dispatch-card" id="notificationDispatchCard">
+            <div class="dispatch-header">
+              <div class="dispatch-status-badge" id="dispatchStatusBadge">
+                <span class="dispatch-pulse-dot" aria-hidden="true"></span>
+                <span class="dispatch-status-text" id="dispatchStatusText">AUTOMATIC EMAIL NOTIFICATION DISPATCHED</span>
+              </div>
+              <button type="button" class="btn-config-email" id="btnConfigCandidateEmail" title="Set candidate's personal email to receive alerts">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M12 20h9"></path>
+                  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                </svg>
+                <span>Edit Recipient</span>
+              </button>
+            </div>
+
+            <div class="dispatch-details-grid">
+              <div class="dispatch-item">
+                <span class="dispatch-item-label">Subject</span>
+                <strong class="dispatch-item-value highlight-alert">🚨 Someone Needs Your Help!</strong>
+              </div>
+              <div class="dispatch-item">
+                <span class="dispatch-item-label">Candidate Recipient</span>
+                <strong class="dispatch-item-value" id="dispatchCandidateEmail">candidate@techascent.com</strong>
+              </div>
+              <div class="dispatch-item dispatch-item-full">
+                <span class="dispatch-item-label">Included Payload</span>
+                <span class="dispatch-payload-tags">
+                  <span class="payload-tag">Name</span>
+                  <span class="payload-tag">Age</span>
+                  <span class="payload-tag">Location</span>
+                  <span class="payload-tag">Email</span>
+                  <span class="payload-tag">Grievance</span>
+                  <span class="payload-tag">Timestamp</span>
+                  <span class="payload-tag">Ref ID</span>
+                </span>
+              </div>
+            </div>
+
+            <div class="dispatch-status-footer" id="dispatchStatusFooter">
+              <span class="dispatch-sent-icon" aria-hidden="true">✓</span>
+              <span class="dispatch-sent-msg" id="dispatchSentMsg">Automated alert dispatched. The candidate receives an instant email without checking the website.</span>
+            </div>
+          </div>
+
+          <div class="confirmation-action">
+            <button type="button" class="btn btn-primary btn-return" id="btnReturnAura">
+              <span>Return to AURA</span>
+            </button>
+          </div>
+
+          <div class="confirmation-footer-note">
+            <p class="trust-msg">Thank you for trusting me.</p>
+            <p class="slogan-msg">Real People. Real Problems. Real Change.</p>
+          </div>
+
+        </div>
+
+        <!-- Submission Error Screen (Requirement 8) -->
+        <div class="submission-error-screen" id="submissionErrorScreen" style="display: none;">
+          <div class="error-crest" aria-hidden="true">
+            <svg class="error-crest-svg" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="30" cy="30" r="26" stroke="rgba(196, 71, 71, 0.4)" stroke-width="2"/>
+              <path d="M30 18v16M30 40h.01" stroke="#C44747" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+          </div>
+
+          <h2 class="error-title">AURA couldn't send your message just yet.</h2>
+          <p class="error-lead">Please try again.</p>
+
+          <div class="error-action">
+            <button type="button" class="btn btn-primary btn-try-again" id="btnTryAgain">
+              <span>Try Again</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Cinematic Aesthetic Margin (Decorative vertical text seen in mockups) -->
+      <aside class="chat-sidebar-deco deco-right" aria-hidden="true">
+        <div class="deco-vertical-text" id="rightDecoText">
+          BRAVER VOICES HAPPIER PEOPLE
+        </div>
+      </aside>
+
+    </div>
+  </section>
+
+  <!-- Floating Chat Badge (allows reopening chat if user minimizes or explores page) -->
+  <button type="button" class="floating-chat-trigger" id="floatingChatBtn" aria-label="Open AURA Chat">
+    <div class="trigger-avatar-wrap">
+      <img src="assets/aura_avatar.jpg" alt="AURA" class="trigger-avatar-img">
+      <span class="trigger-online-dot"></span>
+    </div>
+    <span class="trigger-text">Talk to AURA</span>
+  </button>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-container">
+
+      <div class="footer-brand-col">
+        <div class="footer-logo">
+          <svg class="brand-symbol" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true">
+            <path d="M20 4L33 34H26L20 19L14 34H7L20 4Z" fill="#8F2525" />
+            <path d="M20 10L27 28H23.5L20 18L16.5 28H13L20 10Z" fill="#C44747" />
+            <circle cx="20" cy="17" r="2" fill="#F3EDED" />
+          </svg>
+          <span class="brand-name">AURA</span>
+        </div>
+        <p class="footer-tagline">Guardian of Unheard Voices</p>
+        <p class="footer-motto">"Everyone deserves to be heard."</p>
+      </div>
+
+      <div class="footer-links-col">
+        <h4 class="footer-heading">Navigation</h4>
+        <ul class="footer-menu">
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#story">My Story</a></li>
+          <li><a href="#how-it-works">How It Works</a></li>
+          <li><a href="javascript:void(0)" id="footerChatLink">Talk to AURA</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-info-col">
+        <h4 class="footer-heading">EchoSense Sanctuary</h4>
+        <p class="footer-text">
+          A safe, confidential environment dedicated to listening, understanding, and ensuring no struggle goes unseen.
+        </p>
+        <p class="footer-copyright">
+          &copy; 2026 AURA. All rights reserved. TECHASCENT Project.
+        </p>
+        <p class="footer-gateway-line">
+          Candidate Email Alert Gateway: <strong id="footerCandidateEmail">candidate@techascent.com</strong> &bull; <button type="button" class="btn-link-edit" id="btnFooterEditEmail">Change</button>
+        </p>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Core Script -->
+  <script src="script.js"></script>
+</body>
+
+</html>
