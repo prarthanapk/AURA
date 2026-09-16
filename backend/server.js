@@ -1,5 +1,4 @@
 const express = require('express');
-const { Resend } = require('resend');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
@@ -9,11 +8,6 @@ dotenv.config({ path: path.join(__dirname, '.env') });
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
-// Initialize Resend HTTPS Email Client
-const resendApiKey = (process.env.RESEND_API_KEY || '').trim();
-const resend = resendApiKey ? new Resend(resendApiKey) : null;
-const SENDER_EMAIL = process.env.SENDER_EMAIL || 'AURA <onboarding@resend.dev>';
 
 // ----------------------------------------------------------------------------
 // CORS Configuration
@@ -55,6 +49,95 @@ function formatServerTimestamp() {
   hours = hours ? hours : 12;
 
   return `${day} ${month} ${year}, ${hours}:${minutes} ${ampm}`;
+}
+
+// ----------------------------------------------------------------------------
+// Brevo Transactional Email Engine (HTTPS REST API)
+// Endpoint: POST https://api.brevo.com/v3/smtp/email
+// ----------------------------------------------------------------------------
+async function sendBrevoEmail({ toEmail, toName, subject, htmlContent }) {
+  const apiKey = (process.env.BREVO_API_KEY || '').trim();
+  const senderEmail = (process.env.BREVO_SENDER_EMAIL || '').trim() || 'pkprarthana7@gmail.com';
+
+  if (!apiKey) {
+    console.warn('⚠️ [AURA Server] BREVO_API_KEY is not configured in environment variables.');
+    return {
+      success: false,
+      status: 500,
+      message: 'Email service is not configured. Please set BREVO_API_KEY in environment variables.'
+    };
+  }
+
+  const payload = {
+    sender: {
+      name: 'AURA',
+      email: senderEmail
+    },
+    to: [
+      {
+        email: toEmail,
+        ...(toName ? { name: toName } : {})
+      }
+    ],
+    subject: subject,
+    htmlContent: htmlContent
+  };
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 15000);
+
+  try {
+    const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+      method: 'POST',
+      headers: {
+        'api-key': apiKey,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(payload),
+      signal: controller.signal
+    });
+    clearTimeout(timeoutId);
+
+    let responseData = null;
+    try {
+      responseData = await response.json();
+    } catch (parseErr) {
+      console.warn('Brevo response was not JSON:', parseErr);
+    }
+
+    if (!response.ok) {
+      console.error(`❌ [AURA Server] Brevo API error (HTTP ${response.status}):`, responseData || response.statusText);
+      return {
+        success: false,
+        status: response.status,
+        message: (responseData && (responseData.message || responseData.code)) || `Brevo API error: ${response.statusText}`,
+        error: responseData
+      };
+    }
+
+    return {
+      success: true,
+      status: response.status,
+      data: responseData
+    };
+  } catch (err) {
+    clearTimeout(timeoutId);
+    if (err.name === 'AbortError') {
+      console.error('❌ [AURA Server] Brevo API request timed out after 15s.');
+      return {
+        success: false,
+        status: 504,
+        message: 'Email dispatch timed out. Please try again later.'
+      };
+    }
+    console.error('❌ [AURA Server] Network error contacting Brevo API:', err);
+    return {
+      success: false,
+      status: 502,
+      message: err.message || 'Network error communicating with Brevo Email API.'
+    };
+  }
 }
 
 // ----------------------------------------------------------------------------
@@ -152,7 +235,7 @@ function buildAdminEmailHtml({ name, age, location, email, grievance, reference,
             <!-- Footer -->
             <tr>
               <td style="padding:18px 36px; background-color:#0E0C0C; border-top:1px solid rgba(143,37,37,0.2); font-size:11px; color:#6e6767; text-align:center;">
-                AURA Automated Notification Gateway &bull; Sent automatically upon visitor submission via Resend HTTPS API.
+                AURA Automated Notification Gateway &bull; Sent automatically upon visitor submission via Brevo HTTPS API.
               </td>
             </tr>
 
@@ -394,7 +477,7 @@ app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
     service: 'AURA backend',
-    emailEngine: 'Resend HTTPS API'
+    emailEngine: 'Brevo HTTPS API'
   });
 });
 
@@ -405,7 +488,7 @@ app.get('/api/health', (req, res) => {
  * 1. Extract visitor info from request body.
  * 2. Validate email and grievance.
  * 3. Generate reference number (AURA-XXXX) and submission timestamp.
- * 4. Send VISITOR confirmation email to the exact email address entered in the chatbot.
+ * 4. Send VISITOR confirmation email to the EXACT email address entered in the chatbot.
  * 5. Send ADMIN alert notification to NOTIFICATION_EMAIL.
  * 6. Return JSON success response.
  */
@@ -441,24 +524,24 @@ app.post('/api/submit-grievance', async (req, res) => {
     // 2. Generate submission timestamp on the server
     const submissionTime = formatServerTimestamp();
 
-    // 3. Verify Resend Client Configuration
-    if (!resend) {
-      console.warn('⚠️ [AURA Server] RESEND_API_KEY is not configured in backend/.env.');
+    // 3. Verify Brevo API Key Configuration
+    if (!process.env.BREVO_API_KEY || !process.env.BREVO_API_KEY.trim()) {
+      console.warn('⚠️ [AURA Server] BREVO_API_KEY is not configured in backend/.env.');
       return res.status(500).json({
         success: false,
-        message: 'Email service is not configured. Please set RESEND_API_KEY in environment variables.'
+        message: 'Email service is not configured. Please set BREVO_API_KEY in environment variables.'
       });
     }
 
-    console.log(`📨 [AURA Server] Dispatching emails via Resend for submission ${reference}...`);
+    console.log(`📨 [AURA Server] Dispatching emails via Brevo HTTPS API for submission ${reference}...`);
     console.log(`   Visitor recipient (from chat): ${visitorEmail}`);
 
     // 4. Send VISITOR Confirmation Email (Must go to the exact email entered in chat)
-    const visitorEmailPromise = resend.emails.send({
-      from: SENDER_EMAIL,
-      to: [visitorEmail],
+    const visitorResult = await sendBrevoEmail({
+      toEmail: visitorEmail,
+      toName: visitorName,
       subject: `AURA has heard you — ${reference}`,
-      html: buildVisitorEmailHtml({
+      htmlContent: buildVisitorEmailHtml({
         name: visitorName,
         reference,
         submissionTime,
@@ -466,16 +549,23 @@ app.post('/api/submit-grievance', async (req, res) => {
       })
     });
 
+    if (!visitorResult.success) {
+      console.error('❌ [AURA Server] Brevo error delivering to visitor email:', visitorResult.message);
+      return res.status(visitorResult.status >= 400 && visitorResult.status < 600 ? visitorResult.status : 502).json({
+        success: false,
+        message: visitorResult.message || 'Unable to deliver confirmation email to your address. Please try again.'
+      });
+    }
+
     // 5. Send ADMIN Notification Email (to NOTIFICATION_EMAIL if configured)
     const adminEmail = (process.env.NOTIFICATION_EMAIL || '').trim();
-    let adminEmailPromise = null;
     if (adminEmail && adminEmail.includes('@')) {
       console.log(`   Admin recipient: ${adminEmail}`);
-      adminEmailPromise = resend.emails.send({
-        from: SENDER_EMAIL,
-        to: [adminEmail],
+      sendBrevoEmail({
+        toEmail: adminEmail,
+        toName: 'AURA Admin',
         subject: `🚨 Someone Needs Your Help! | ${reference}`,
-        html: buildAdminEmailHtml({
+        htmlContent: buildAdminEmailHtml({
           name: visitorName,
           age: visitorAge,
           location: visitorLocation,
@@ -484,26 +574,11 @@ app.post('/api/submit-grievance', async (req, res) => {
           reference,
           submissionTime
         })
-      });
-    }
-
-    // Execute email sends
-    const [visitorResult, adminResult] = await Promise.all([
-      visitorEmailPromise.catch(err => ({ error: err })),
-      adminEmailPromise ? adminEmailPromise.catch(err => ({ error: err })) : Promise.resolve({ data: null })
-    ]);
-
-    // Check for Resend errors on visitor confirmation
-    if (visitorResult && visitorResult.error) {
-      console.error('❌ [AURA Server] Resend error delivering to visitor email:', visitorResult.error);
-      return res.status(502).json({
-        success: false,
-        message: visitorResult.error.message || 'Unable to deliver confirmation email to your address. Please try again.'
-      });
-    }
-
-    if (adminResult && adminResult.error) {
-      console.warn('⚠️ [AURA Server] Resend notice for admin email:', adminResult.error.message || adminResult.error);
+      }).then(res => {
+        if (!res.success) {
+          console.warn('⚠️ [AURA Server] Brevo notice for admin email:', res.message);
+        }
+      }).catch(err => console.warn('⚠️ [AURA Server] Admin email catch error:', err));
     }
 
     console.log(`✅ [AURA Server] Successfully dispatched confirmation email for ${reference} to ${visitorEmail}.`);
@@ -552,22 +627,22 @@ app.post('/api/send-guidance', async (req, res) => {
       });
     }
 
-    // Verify Resend Client Configuration
-    if (!resend) {
-      console.warn('⚠️ [AURA Server] RESEND_API_KEY is not configured in backend/.env.');
+    // Verify Brevo API Key Configuration
+    if (!process.env.BREVO_API_KEY || !process.env.BREVO_API_KEY.trim()) {
+      console.warn('⚠️ [AURA Server] BREVO_API_KEY is not configured in backend/.env.');
       return res.status(500).json({
         success: false,
-        message: 'Email service is not configured. Please set RESEND_API_KEY in environment variables.'
+        message: 'Email service is not configured. Please set BREVO_API_KEY in environment variables.'
       });
     }
 
     console.log(`📨 [AURA Server] Dispatching guidance email for ${refCode} to visitor: ${visitorEmail}...`);
 
-    const { data, error } = await resend.emails.send({
-      from: SENDER_EMAIL,
-      to: [visitorEmail],
+    const result = await sendBrevoEmail({
+      toEmail: visitorEmail,
+      toName: visitorName,
       subject: `AURA — Your Guidance | ${refCode}`,
-      html: buildGuidanceEmailHtml({
+      htmlContent: buildGuidanceEmailHtml({
         name: visitorName,
         email: visitorEmail,
         grievance: (grievance || '').trim(),
@@ -576,11 +651,11 @@ app.post('/api/send-guidance', async (req, res) => {
       })
     });
 
-    if (error) {
-      console.error('❌ [AURA Server] Resend error delivering guidance email:', error);
-      return res.status(502).json({
+    if (!result.success) {
+      console.error('❌ [AURA Server] Brevo error delivering guidance email:', result.message);
+      return res.status(result.status >= 400 && result.status < 600 ? result.status : 502).json({
         success: false,
-        message: error.message || 'Unable to deliver guidance email. Please try again.'
+        message: result.message || 'Unable to deliver guidance email. Please try again.'
       });
     }
 
@@ -607,7 +682,7 @@ app.post('/api/send-guidance', async (req, res) => {
 app.listen(PORT, () => {
   console.log('=======================================================');
   console.log(`🛡️ AURA Backend Server running on http://localhost:${PORT}`);
-  console.log(`Email Transport: Resend HTTPS API (Sender: ${SENDER_EMAIL})`);
+  console.log(`Email Transport: Brevo HTTPS API (Sender: ${process.env.BREVO_SENDER_EMAIL || 'pkprarthana7@gmail.com'})`);
   console.log(`Health check: http://localhost:${PORT}/api/health`);
   console.log(`Submission endpoint: POST http://localhost:${PORT}/api/submit-grievance`);
   console.log(`Guidance endpoint: POST http://localhost:${PORT}/api/send-guidance`);
